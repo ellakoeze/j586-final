@@ -1,0 +1,56 @@
+body {
+  
+}
+
+#map-canvas{
+    height: 500px;
+    width: 700px;
+    margin: 0;
+    padding: 0;
+}
+
+iframe {
+    height: 500px;
+    /*border-style: none;*/
+    border: 3px red solid;
+}
+
+::-webkit-scrollbar{
+    display: none;
+}
+
+.insta{
+    border: solid 1px #f3f3f3;
+    width: 250px;
+   
+    -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.5);
+    margin: 10px auto;
+    
+}
+
+.insta img{
+    width: 250px;
+}
+
+
+.insta-caption{
+    font-size: 8pt;
+    padding: 10px;
+}
+
+.insta-column{
+   padding: 0px;
+   height: 750px;
+   overflow-y: auto;
+   overflow-x: hidden;
+    
+}
+
+
+
+
+/*.insta-column::-webkit-scrollbar {
+    display: none;
+}*/
