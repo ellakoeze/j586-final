@@ -1,14 +1,24 @@
 <html>
     <head>
-        
-        
+        <meta charset="UTF-8">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+         <link rel="stylesheet" href="css/twitter.css">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>  
+         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script src="js/tweetLinkIt.js"></script>
     </head>
     <body>
-        
+       <script>
+
+    function pageComplete(){
+        $('.tweet-content').tweetLinkify();
+    }
+</script>      
 
 
 <?php
-ini_set('display_errors', 1);
+/*ini_set('display_errors', 1);*/
 require_once('TwitterAPIExchange.php');
 
 /** Set access tokens here - see: https://dev.twitter.com/apps/ **/
@@ -19,57 +29,39 @@ $settings = array(
     'consumer_secret' => "ykKLRreRi1vp8kqyRUD5XZvjSAjWFnwu8CII7vFT9cLgIb18Yt"
 );
 
-/** URL for REST request, see: https://dev.twitter.com/docs/api/1.1/ 
-$url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-$requestMethod = 'GET';
-**/
-/** POST fields required by the URL above. See relevant docs as above
-$postfields = array(
-    'screen_name' => 'hillaryclinton', 
-    'skip_status' => '1'
-);
- **/
-/** Perform a POST request and echo the response 
+
+$url = "https://api.twitter.com/1.1/statuses/user_timeline.json";
+$requestMethod = "GET";
+if (isset($_GET['user']))  {$user = $_GET['user'];}  else {$user  = "HillaryClinton";}
+if (isset($_GET['count'])) {$count = $_GET['count'];} else {$count = 20;}
+$getfield = "?screen_name=$user&count=$count";
 $twitter = new TwitterAPIExchange($settings);
-echo $twitter->buildOauth($url, $requestMethod)
-             ->setPostfields($postfields)
-             ->performRequest();
-**/
-/** Perform a GET request and echo the response **/
-/** Note: Set the GET field BEFORE calling buildOauth(); **/
-$url = 'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=HillaryClinton';
-$getfield = '?screen_name=HillaryClinton';
-$requestMethod = 'GET';
-$twitter = new TwitterAPIExchange($settings);
-echo $twitter->setGetfield($getfield)
-             ->buildOauth($url, $requestMethod)
-             ->performRequest();
+$string = json_decode($twitter->setGetfield($getfield)
+->buildOauth($url, $requestMethod)
+->performRequest(),$assoc = TRUE);
+if($string["errors"][0]["message"] != "") {echo "<h3>Sorry, there was a problem.</h3><p>Twitter returned the following error message:</p><p><em>".$string[errors][0]["message"]."</em></p>";exit();}
 
-$tweetData = json_decode($twitter->setGetfield($getfield)
-             ->buildOauth($url, $requestMethod)
-             ->performRequest(), $assoc=TRUE);
 
-echo $tweetData;
-
-$media_url = $tweetData->entities->media[0]->media_url;
-
-foreach($tweetData as $items)
-{
-    
-    echo "<div class='twitter-tweet'>Tweet: " . $items['text'] . "</div>";
-    echo "When: " . $items['created_at'] . "</br>";
-    echo "Name: " . $items['user']['name'] . "</br>";
-    echo "<img src='" . $items['user']['profile_image_url'] . "' ></br>";   
-    echo $items['entities']['media']['media_url'];
-    echo "<img src='". $media_url ."'/>";
-    echo ['coordinates'];
- 
-    
-};
- 
-
+foreach($string as $items)
+    {
+        
+        $userArray = $items['user'];
+        $entitiesArray = $items['entities'];
+        $mediaArray = $entitiesArray['media'];
+        $tweetMedia = $mediaArray[0];
+        
+        echo "<div class='tweet'><div class='tweet-header'><img src='" . $items['user']['profile_image_url'] . "' >"; 
+        echo "<strong> ". $items['user']['name']."</strong>";
+        echo "<span class='screen-name'>   @". $items['user']['screen_name']."</span></div>";
+        echo "<div class='tweet-content'><p>". $items['text']. "</p>";
+       
+        echo $items['place']['name']."</div>";
+         echo "<a target='_blank' href='http://www.twitter.com/" . $tweetMedia['media_url'] . "'><img class='twitter-pic' target='_blank' src='" . $tweetMedia['media_url'] . "'></a></div>";
+        
+    }
+    echo "<script>pageComplete();</script>";
 ?>
+
+
     </body>
-</html><?php
-
-?>
+</html>

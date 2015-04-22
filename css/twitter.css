@@ -1,0 +1,29 @@
+img {
+   
+    border-radius: .5em;
+    overflow: hidden;  
+}
+
+.tweet{
+    display: block;
+    border: solid #f3f3f3 1px;
+   padding: 10px;
+
+   
+}
+
+
+.tweet-header{
+    display: inline-block;
+}
+
+
+.tweet-content{
+ margin-left: 55px;
+}
+
+.twitter-pic{
+    margin-left: 55px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

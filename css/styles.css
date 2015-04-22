@@ -10,9 +10,9 @@ body {
 }
 
 iframe {
-    height: 500px;
+    /*height: 500px;*/
     /*border-style: none;*/
-    border: 3px red solid;
+    /*border: 3px red solid;*/
 }
 
 ::-webkit-scrollbar{

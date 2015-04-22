@@ -4,10 +4,17 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
          <link rel="stylesheet" href="css/twitter.css">
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>  
-        
+         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script src="js/tweetLinkIt.js"></script>
     </head>
     <body>
-        
+   <script>
+
+    function pageComplete(){
+        $('.tweet-content').tweetLinkify();
+    }
+</script>          
 
 
 <?php
@@ -38,14 +45,22 @@ if($string["errors"][0]["message"] != "") {echo "<h3>Sorry, there was a problem.
 
 foreach($string as $items)
     {
+        
+        $userArray = $items['user'];
+        $entitiesArray = $items['entities'];
+        $mediaArray = $entitiesArray['media'];
+        $tweetMedia = $mediaArray[0];
+        
         echo "<div class='tweet'><div class='tweet-header'><img src='" . $items['user']['profile_image_url'] . "' >"; 
         echo "<strong> ". $items['user']['name']."</strong>";
         echo "<span class='screen-name'>   @". $items['user']['screen_name']."</span></div>";
-        echo "<div class='tweet-content'>". $items['text']."</div>";
-        echo "<div class='tweet-content'>".$items['created_at']."<br />";
-        echo $items['place']['name']."</div></div>";
+        echo "<div class='tweet-content'><p>". $items['text']. "</p>";
+       
+        echo $items['place']['name']."</div>";
+         echo "<a target='_blank' href='http://www.twitter.com/" . $tweetMedia['media_url'] . "'><img class='twitter-pic' target='_blank' src='" . $tweetMedia['media_url'] . "'></a></div>";
         
     }
+    echo "<script>pageComplete();</script>";
 ?>
 
 
