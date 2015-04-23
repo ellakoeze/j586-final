@@ -3,17 +3,45 @@
         <meta charset="UTF-8">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
          <link rel="stylesheet" href="css/twitter.css">
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>  
-         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        
 
 <script src="js/tweetLinkIt.js"></script>
     </head>
     <body>
    <script>
-
+    
     function pageComplete(){
         $('.tweet-content').tweetLinkify();
     }
+    
+  /*
+    function removeImg(){
+        var img = document.getElementsByClassName("twitter-pic");
+            console.log(img);
+        var noPic="";
+        
+        for (i=0; i<20; i++) {
+            var noPic= img[i];
+                console.log(noPic);
+            var src = noPic.currentSrc;
+                console.log(src);
+         if (src== "") {
+          replace();
+            };
+            //if (src != "") {
+              //  replace();
+           // };
+         }
+        function replace(){
+            
+            $(noPic).parent().replaceWith("");
+            console.log("removed");
+         };
+       }
+  */
+  
 </script>          
 
 
@@ -61,6 +89,7 @@ foreach($string as $items)
         
     }
     echo "<script>pageComplete();</script>";
+    //echo "<script>removeImg();</script>";
 ?>
 
 

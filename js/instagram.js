@@ -20,6 +20,8 @@ console.log(candidatesId[1]);
 
 makePictures();
 
+
+
 }
 
 function makePictures(){
@@ -66,6 +68,8 @@ $(function() {
  });
 
 console.log("I've run how many times?");
+
 }
+
 
 
